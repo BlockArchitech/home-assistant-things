@@ -1,0 +1,83 @@
+# 
+# a wild home assistant config
+# i should probably use secrets.yaml at some point or i'm going to leak my address
+# 
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+emulated_hue:
+  listen_port: 80
+
+sensor:
+  - platform: cryptoinfo
+    id: "main wallet"          
+    cryptocurrency_name: "ethereum"  
+    currency_name: "eur"             
+    multiplier: 1                   
+    update_frequency: 15
+    
+esxi_stats:
+    host: 192.168.183.195
+    username: root
+    password: nicetry123
+
+logger:
+  default: error
+  logs:
+    homeassistant.components.simplisafe: debug
+    simplipy: debug
+
+
+climate:
+  - platform: dual_smart_thermostat
+    name: Bedroom Climate
+    heater: switch.space_heater
+    cooler: fan.fan
+    target_sensor: sensor.lumi_lumi_weather_temperature
+    hot_tolerance: 0.5
+    cold_tolerance: 0.5
+    max_temp: 75
+    min_temp: 50
+    initial_hvac_mode: "off"
+    keep_alive:
+      minutes: 5
+    min_cycle_duration:
+      seconds: 5
+      
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code: "1234" # nice try 2
+    arming_time: 5
+    delay_time: 5
+    trigger_time: 4
+
+cover:
+  - platform: template
+    covers:
+      garage_door:
+        device_class: garage
+        friendly_name: "Garage Door"
+        value_template: >-
+          {% if is_state('binary_sensor.contact_sensor_contact', 'on') %}
+            open
+          {% else %}
+            closed
+          {% endif %}
+        open_cover:
+          service: script.garage_door_protected
+        close_cover:
+          service: script.garage_door_protected
+        stop_cover:
+          service: script.garage_door_protected
+
+frontend:
+  extra_module_url:
+    - /hacsfiles/custom-sidebar/custom-sidebar.js
