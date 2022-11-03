@@ -1,0 +1,36 @@
+order:
+  - item: overview
+    hide: false
+    name: Lovelace
+  - item: file editor
+    bottom: false
+    name: Configurator
+  - item: hacs
+    hide: true
+  - item: grafana
+    hide: true
+  - item: log viewer
+    hide: true
+  - item: node-red
+    hide: false
+  - item: zigbee2mqtt
+    hide: false
+    name: Zigbee
+  - item: terminal
+    hide: true
+  - item: media
+    hide: true
+  - item: phpmyadmin
+    hide: true
+  - item: shopping list
+    hide: true
+  - item: energy
+    hide: true
+  - item: logbook
+    hide: true
+  - item: history
+    bottom: true
+  - item: esphome
+    hide: true
+  - item: map
+    hide: true
